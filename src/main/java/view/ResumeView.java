@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ResumeView {
-    private final Scanner scanner=new Scanner(System.in);
-
     public PersonalDTO getPersonalDTO() {
         PersonalScanner personalScanner = new PersonalScanner();
         return new PersonalDTO(
@@ -64,8 +62,13 @@ public class ResumeView {
         return introductionScanner.getSelfIntroduction();
     }
 
+    public String getPhotoFileName() {
+        PersonalScanner personalScanner = new PersonalScanner();
+        return personalScanner.getPhotoFileName();
+    }
+
     public void generateExcelResume() throws IOException {
-        ResumeController resumeController = new ResumeController();
+        ResumeController resumeController = new ResumeController(this.getPhotoFileName());
         resumeController.createMemberInformationSheet();
         resumeController.generatePersonalHeader();
         resumeController.insertPersonalInformation(this.getPersonalDTO());

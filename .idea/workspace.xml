@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be53b43b-4796-496e-9cc6-764790c21022" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/resume_backup.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.~lock.resume.xlsx#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resume.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/resume.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/scanner/PersonalScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/scanner/PersonalScanner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,11 +47,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/wonsang/kernel360/java_programming/javaProject02"
+    "last_opened_file_path": "/home/wonsang/kernel360/java_programming/JavaAutoResume/src"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java" />
     </key>
   </component>
@@ -76,5 +83,16 @@
       <updated>1696596880842</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

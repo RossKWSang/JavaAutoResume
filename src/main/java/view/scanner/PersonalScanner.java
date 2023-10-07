@@ -5,6 +5,10 @@ import java.util.Scanner;
 public class PersonalScanner {
     private final Scanner personalScanner = new Scanner(System.in);
 
+    public String getPhotoFileName() {
+        System.out.print("사진파일을 입력하세요: ");
+        return personalScanner.nextLine();
+    }
     public String getPersonName() {
         System.out.print("이름을 입력하세요: ");
         return personalScanner.nextLine();
@@ -28,15 +32,3 @@ public class PersonalScanner {
 
 
 }
-
-
-/*
-    private String personName;
-    private String email;
-    private String address;
-    private String phoneNumber;
-    private String birthDate;
-
-
-
-* */

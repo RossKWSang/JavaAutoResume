@@ -5,10 +5,7 @@ import model.EducationDTO;
 import model.PersonalDTO;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,6 +16,7 @@ import java.util.List;
 public class ResumeController {
     private int rowIndex = 0;
     private String filename = "resume.xlsx";
+    private String photoFileName;
     private Sheet currentSheet;
     private final XSSFWorkbook workbook=new XSSFWorkbook();
     private final XSSFCreationHelper helper = workbook.getCreationHelper();
@@ -27,8 +25,8 @@ public class ResumeController {
     public ResumeController() {
     }
 
-    public ResumeController(String filename) {
-        this.filename = filename;
+    public ResumeController(String photoFileName) {
+        this.photoFileName = photoFileName;
     }
 
     public int getRowIndex() {
@@ -97,7 +95,7 @@ public class ResumeController {
     }
 
     public void insertDefaultImage(Row row) throws IOException {
-        String defaultImage = "default_profile_image.png";
+        String defaultImage = this.photoFileName;
         FileInputStream fileInputStream = new FileInputStream(defaultImage);
         BufferedImage originalImage = ImageIO.read(fileInputStream);
 
@@ -161,9 +159,17 @@ public class ResumeController {
         }
     }
 
+    private XSSFCellStyle getWrapCellStyle() {
+        XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+        style.setWrapText(true);
+        return style;
+    }
+
     public void insertSelfIntroduction(String selfIntroduction) throws IOException {
         Row educationRow = this.createRowInCurrentSheet();
-        educationRow.createCell(0).setCellValue(selfIntroduction);
+        Cell selfIntroductionCell = educationRow.createCell(0);
+        selfIntroductionCell.setCellStyle(getWrapCellStyle());
+        selfIntroductionCell.setCellValue(new XSSFRichTextString(selfIntroduction));
     }
 
     public void generateExcelResume() {
