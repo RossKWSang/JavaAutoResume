@@ -9,6 +9,8 @@ import view.scanner.EducationScanner;
 import view.scanner.PersonalScanner;
 import view.scanner.IntroductionScanner;
 
+import controller.ResumeController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -62,6 +64,7 @@ public class ResumeView {
     }
 
     public void generateExcelResume() {
-
+        ResumeController resumeController = new ResumeController();
+        resumeController.testResumeGeneration();
     }
 }

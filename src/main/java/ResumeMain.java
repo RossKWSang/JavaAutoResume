@@ -9,6 +9,7 @@ public class ResumeMain {
         System.out.println(resumeView.getListOfCareerDTO());
         System.out.println(resumeView.getListOfEducationDTO());
         System.out.println(resumeView.getSelfIntroduction());
+        resumeView.generateExcelResume();
         System.out.println("Hello world");
     }
 }
