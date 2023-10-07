@@ -7,7 +7,7 @@
 
 **요구사항**
 
-1.Model, View, Controller 클래스를 만들어서 MVC 패턴을 구성한다.
+1.Model, View, Controller 클래스를 만들어서 MVC 패턴을 구성한다. (완료)
 
 2.사용자로부터 정보를 입력받기 위해 View 클래스에서 Scanner를 사용하여 입력 받는다.
 
