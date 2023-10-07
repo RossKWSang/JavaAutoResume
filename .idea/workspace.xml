@@ -5,19 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be53b43b-4796-496e-9cc6-764790c21022" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ResumeMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/CareerDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/EducationDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/PersonalDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/CareerScanner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/EducationScanner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/PersonalScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/changes.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2WOHoEYFTQJuE3dzhNYguwbqLSd" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -28,9 +48,29 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/wonsang/kernel360/java_programming/javaProject02"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ResumeMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ResumeMain" />
+      <module name="JavaAutoResume" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ResumeMain" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
