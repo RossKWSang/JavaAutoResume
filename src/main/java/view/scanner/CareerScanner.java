@@ -1,12 +1,11 @@
 package view.scanner;
 
-import model.CareerDTO;
 import java.util.Scanner;
 
 public class CareerScanner {
     private final Scanner careerScanner=new Scanner(System.in);
 
-    public String[] getWorkingPeriod() {
+    public String[] getCareerInformation() {
         String[] result={"Terminate Loop"};
 
         System.out.println("경력 정보를 입력하세요 (종료는 q)");
@@ -15,6 +14,6 @@ public class CareerScanner {
         if(scanLine.equals("q")) {
             return result;
         }
-        return careerScanner.nextLine().split(" ");
+        return scanLine.split(" ");
     }
 }

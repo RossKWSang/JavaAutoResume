@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be53b43b-4796-496e-9cc6-764790c21022" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ResumeMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CareerDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/EducationDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PersonalDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/CareerScanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/EducationScanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/PersonalScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/changes.txt" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/scanner/IntroductionScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ResumeMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ResumeMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ResumeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ResumeView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/scanner/CareerScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/scanner/CareerScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/scanner/EducationScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/scanner/EducationScanner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +45,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/wonsang/kernel360/java_programming/javaProject02"
   }

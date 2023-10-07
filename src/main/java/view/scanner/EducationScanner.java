@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class EducationScanner {
     private final Scanner educationScanner=new Scanner(System.in);
 
-    public String[] getWorkingPeriod() {
+    public String[] getEducationInformation() {
         String[] result={"Terminate Loop"};
 
         System.out.println("학력 정보를 입력하세요 (종료는 q)");
@@ -14,6 +14,6 @@ public class EducationScanner {
         if(scanLine.equals("q")) {
             return result;
         }
-        return educationScanner.nextLine().split(" ");
+        return scanLine.split(" ");
     }
 }
