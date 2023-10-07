@@ -5,11 +5,14 @@ import model.EducationDTO;
 import model.PersonalDTO;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
 
@@ -58,12 +61,6 @@ public class ResumeController {
 
     public void createMemberInformationSheet() {
         this.currentSheet = workbook.createSheet("회원 정보");
-        /* this.currentSheet.setColumnWidth(0, 6000);
-        this.currentSheet.setColumnWidth(1, 3000);
-        this.currentSheet.setColumnWidth(2, 3000);
-        this.currentSheet.setColumnWidth(3, 3000);
-        this.currentSheet.setColumnWidth(4, 3000);
-        this.currentSheet.setColumnWidth(5, 3000); */
     }
 
     public void createSelfIntroductionSheet() {
@@ -99,23 +96,44 @@ public class ResumeController {
         headerRow.createCell(3).setCellValue("근속연수");
     }
 
-    public void insertDefaultImage() throws IOException {
+    public void insertDefaultImage(Row row) throws IOException {
         String defaultImage = "default_profile_image.png";
         FileInputStream fileInputStream = new FileInputStream(defaultImage);
-        byte[] bytes = IOUtils.toByteArray(fileInputStream);
-        int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
-        fileInputStream.close();
-        Drawing drawing = this.currentSheet.createDrawingPatriarch();
-        XSSFClientAnchor anchor = helper.createClientAnchor();
-        anchor.setCol1(0);
-        anchor.setRow1(1);
-        Picture pict = drawing.createPicture(anchor, pictureIdx);
-        pict.resize(0.3);
+        BufferedImage originalImage = ImageIO.read(fileInputStream);
+
+        // 증명사진 크기로 이미지를 조절합니다. (가로 35mm, 세로 45mm)
+        int newWidth = (int) (35 * 2.83465); // mm 단위를 픽셀 단위로 변환합니다 (1mm = 2.83465px).
+        int newHeight = (int) (45 * 2.83465); // mm 단위를 픽셀 단위로 변환합니다 (1mm = 2.83465px).
+        Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage resizedBufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2d = resizedBufferedImage.createGraphics();
+        g2d.drawImage(resizedImage, 0, 0, null);
+        g2d.dispose();
+
+        // 조절된 이미지를 바이트 배열로 변환합니다.
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(resizedBufferedImage, "png", baos);
+        byte[] imageBytes = baos.toByteArray();
+        int imageIndex = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+
+        // Drawing 객체를 생성하고 이미지를 삽입합니다.
+        XSSFDrawing drawing = (XSSFDrawing) this.currentSheet.createDrawingPatriarch();
+        XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0, 0, 1, 1, 2);
+        drawing.createPicture(anchor, imageIndex);
+
+        // 이미지가 삽입된 행의 높이와 열의 너비를 조정합니다.
+        // 96은 화면의 DPI(Dots Per Inch, 인치당 도트 수)
+        // Excel에서 셀의 높이는 포인트(point) 단위로 표시(1 포인트는 1/72 인치입니다)
+        row.setHeightInPoints(newHeight*72/96); // 픽셀을 point로변경
+        // 8이란 값은, 엑셀에서 사용되는 기본 문자 폭의 값
+        // 엑셀에서는 한 개의 문자가 차지하는 너비를 1/256 단위로 계산
+        int columnWidth = (int) Math.floor(((float) newWidth / (float) 8) * 256);
+        this.currentSheet.setColumnWidth(0, columnWidth);
     }
 
     public void insertPersonalInformation(PersonalDTO personalDTO) throws IOException {
         Row personalInformationRow = this.createRowInCurrentSheet();
-        this.insertDefaultImage();
+        this.insertDefaultImage(personalInformationRow);
         personalInformationRow.createCell(1).setCellValue(personalDTO.getPersonName());
         personalInformationRow.createCell(2).setCellValue(personalDTO.getEmail());
         personalInformationRow.createCell(3).setCellValue(personalDTO.getAddress());
@@ -143,12 +161,17 @@ public class ResumeController {
         }
     }
 
+    public void insertSelfIntroduction(String selfIntroduction) throws IOException {
+        Row educationRow = this.createRowInCurrentSheet();
+        educationRow.createCell(0).setCellValue(selfIntroduction);
+    }
+
     public void generateExcelResume() {
         try {
             FileOutputStream outputStream = new FileOutputStream(new File(filename));
             workbook.write(outputStream);
             workbook.close();
-            System.out.println("엑셀 파일이 저장되었습니다." + filename);
+            // System.out.println("엑셀 파일이 저장되었습니다." + filename);
         } catch (IOException e) {
             System.out.println("엑셀 파일 저장 중 오류가 발행했습니다.");
             e.printStackTrace();

@@ -11,8 +11,6 @@ import view.scanner.IntroductionScanner;
 
 import controller.ResumeController;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +66,6 @@ public class ResumeView {
 
     public void generateExcelResume() throws IOException {
         ResumeController resumeController = new ResumeController();
-        // resumeController.testResumeGeneration();
-
         resumeController.createMemberInformationSheet();
         resumeController.generatePersonalHeader();
         resumeController.insertPersonalInformation(this.getPersonalDTO());
@@ -77,7 +73,10 @@ public class ResumeView {
         resumeController.insertEducationInformation(this.getListOfEducationDTO());
         resumeController.generateCareerHeader();;
         resumeController.insertCareerInformation(this.getListOfCareerDTO());
+        resumeController.setRowIndex(0);
         resumeController.createSelfIntroductionSheet();
+        resumeController.insertSelfIntroduction(this.getSelfIntroduction());
         resumeController.generateExcelResume();
+        System.out.println("엑셀 파일이 저장되었습니다. >> " + resumeController.getFilename());
     }
 }
