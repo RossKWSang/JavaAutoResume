@@ -1,3 +1,11 @@
+feat: add resize column feature on resume sheet(0)
+
+refactor: refactor image insert method in controller
+
+feat: self introduction column size
+
+docs: update README.md
+
 feat: photograph file name input feature
 
 docs: working on README.md
