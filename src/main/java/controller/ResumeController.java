@@ -18,8 +18,11 @@ public class ResumeController {
     private String filename = "resume.xlsx";
     private String photoFileName;
     private Sheet currentSheet;
+
+    private final int newWidth = (int) (35 * 2.83465);
+    private final int newHeight = (int) (45 * 2.83465);
     private final XSSFWorkbook workbook=new XSSFWorkbook();
-    private final XSSFCreationHelper helper = workbook.getCreationHelper();
+    // private final XSSFCreationHelper helper = workbook.getCreationHelper();
 
 
     public ResumeController() {
@@ -94,44 +97,48 @@ public class ResumeController {
         headerRow.createCell(3).setCellValue("근속연수");
     }
 
-    public void insertDefaultImage(Row row) throws IOException {
-        String defaultImage = this.photoFileName;
-        FileInputStream fileInputStream = new FileInputStream(defaultImage);
-        BufferedImage originalImage = ImageIO.read(fileInputStream);
-
-        // 증명사진 크기로 이미지를 조절합니다. (가로 35mm, 세로 45mm)
-        int newWidth = (int) (35 * 2.83465); // mm 단위를 픽셀 단위로 변환합니다 (1mm = 2.83465px).
-        int newHeight = (int) (45 * 2.83465); // mm 단위를 픽셀 단위로 변환합니다 (1mm = 2.83465px).
-        Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage resizedBufferedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_4BYTE_ABGR);
+    public BufferedImage resizeBufferedImage(BufferedImage originalImage) {
+        Image resizedImage = originalImage.getScaledInstance(this.newWidth, this.newHeight, Image.SCALE_SMOOTH);
+        BufferedImage resizedBufferedImage = new BufferedImage(this.newWidth, this.newHeight, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = resizedBufferedImage.createGraphics();
         g2d.drawImage(resizedImage, 0, 0, null);
         g2d.dispose();
 
-        // 조절된 이미지를 바이트 배열로 변환합니다.
+        return resizedBufferedImage;
+    }
+
+    public byte[] convertImageToByteArray(BufferedImage resizedBufferedImage) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(resizedBufferedImage, "png", baos);
-        byte[] imageBytes = baos.toByteArray();
-        int imageIndex = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+        return baos.toByteArray();
+    }
 
-        // Drawing 객체를 생성하고 이미지를 삽입합니다.
+    public int addPictureWorkbook(byte[] imageBytes) {
+        return workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+    }
+
+    public void insertImage(int imageIndex) {
         XSSFDrawing drawing = (XSSFDrawing) this.currentSheet.createDrawingPatriarch();
         XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0, 0, 1, 1, 2);
         drawing.createPicture(anchor, imageIndex);
+    }
 
-        // 이미지가 삽입된 행의 높이와 열의 너비를 조정합니다.
-        // 96은 화면의 DPI(Dots Per Inch, 인치당 도트 수)
-        // Excel에서 셀의 높이는 포인트(point) 단위로 표시(1 포인트는 1/72 인치입니다)
-        row.setHeightInPoints(newHeight*72/96); // 픽셀을 point로변경
-        // 8이란 값은, 엑셀에서 사용되는 기본 문자 폭의 값
-        // 엑셀에서는 한 개의 문자가 차지하는 너비를 1/256 단위로 계산
+
+    public void initiateImageInsertion(Row row) throws IOException {
+        row.setHeightInPoints((float) (this.newHeight * 72) /96);
         int columnWidth = (int) Math.floor(((float) newWidth / (float) 8) * 256);
         this.currentSheet.setColumnWidth(0, columnWidth);
+
+        String defaultImage = this.photoFileName;
+        FileInputStream fileInputStream = new FileInputStream(defaultImage);
+        BufferedImage originalImage = ImageIO.read(fileInputStream);
+
+        insertImage(addPictureWorkbook(convertImageToByteArray(resizeBufferedImage(originalImage))));
     }
 
     public void insertPersonalInformation(PersonalDTO personalDTO) throws IOException {
         Row personalInformationRow = this.createRowInCurrentSheet();
-        this.insertDefaultImage(personalInformationRow);
+        this.initiateImageInsertion(personalInformationRow);
         personalInformationRow.createCell(1).setCellValue(personalDTO.getPersonName());
         personalInformationRow.createCell(2).setCellValue(personalDTO.getEmail());
         personalInformationRow.createCell(3).setCellValue(personalDTO.getAddress());
@@ -179,7 +186,6 @@ public class ResumeController {
             workbook.write(outputStream);
             workbook.close();
             return true;
-            // System.out.println("엑셀 파일이 저장되었습니다." + filename);
         } catch (IOException e) {
             System.out.println("엑셀 파일 저장 중 오류가 발행했습니다.");
             e.printStackTrace();
