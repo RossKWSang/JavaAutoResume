@@ -18,7 +18,6 @@ public class ResumeController {
     private String filename = "resume.xlsx";
     private String photoFileName;
     private Sheet currentSheet;
-
     private final int newWidth = (int) (35 * 2.83465);
     private final int newHeight = (int) (45 * 2.83465);
     private final XSSFWorkbook workbook=new XSSFWorkbook();
@@ -95,6 +94,12 @@ public class ResumeController {
         headerRow.createCell(1).setCellValue("근무처");
         headerRow.createCell(2).setCellValue("담당업무");
         headerRow.createCell(3).setCellValue("근속연수");
+    }
+
+    public void resizeResumeSheet() {
+        for (int i=0; i<6; i++) {
+            this.currentSheet.autoSizeColumn(i);
+        }
     }
 
     public BufferedImage resizeBufferedImage(BufferedImage originalImage) {

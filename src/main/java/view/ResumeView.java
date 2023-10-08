@@ -76,6 +76,7 @@ public class ResumeView {
         resumeController.insertEducationInformation(this.getListOfEducationDTO());
         resumeController.generateCareerHeader();;
         resumeController.insertCareerInformation(this.getListOfCareerDTO());
+        resumeController.resizeResumeSheet();
         resumeController.setRowIndex(0);
         resumeController.createSelfIntroductionSheet();
         resumeController.insertSelfIntroduction(this.getSelfIntroduction());
