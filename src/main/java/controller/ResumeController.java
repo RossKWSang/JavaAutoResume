@@ -168,19 +168,22 @@ public class ResumeController {
     public void insertSelfIntroduction(String selfIntroduction) throws IOException {
         Row educationRow = this.createRowInCurrentSheet();
         Cell selfIntroductionCell = educationRow.createCell(0);
-        selfIntroductionCell.setCellStyle(getWrapCellStyle());
         selfIntroductionCell.setCellValue(new XSSFRichTextString(selfIntroduction));
+        selfIntroductionCell.setCellStyle(getWrapCellStyle());
+        this.currentSheet.autoSizeColumn(0);
     }
 
-    public void generateExcelResume() {
+    public boolean generateExcelResume() {
         try {
             FileOutputStream outputStream = new FileOutputStream(new File(filename));
             workbook.write(outputStream);
             workbook.close();
+            return true;
             // System.out.println("엑셀 파일이 저장되었습니다." + filename);
         } catch (IOException e) {
             System.out.println("엑셀 파일 저장 중 오류가 발행했습니다.");
             e.printStackTrace();
+            return false;
         }
     }
 }
