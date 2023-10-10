@@ -4,6 +4,7 @@ import model.CareerDTO;
 import model.EducationDTO;
 import model.PersonalDTO;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import view.scanner.CareerScanner;
 import view.scanner.EducationScanner;
 import view.scanner.PersonalScanner;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ResumeView {
+    private final XSSFWorkbook workbook = new XSSFWorkbook();
     public PersonalDTO getPersonalDTO() {
         PersonalScanner personalScanner = new PersonalScanner();
         return new PersonalDTO(
@@ -68,7 +70,7 @@ public class ResumeView {
     }
 
     public void generateExcelResume() throws IOException {
-        ResumeController resumeController = new ResumeController(this.getPhotoFileName());
+        ResumeController resumeController = new ResumeController(this.getPhotoFileName(), this.workbook);
         resumeController.createMemberInformationSheet();
         resumeController.generatePersonalHeader();
         resumeController.insertPersonalInformation(this.getPersonalDTO());

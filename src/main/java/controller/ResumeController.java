@@ -18,17 +18,17 @@ public class ResumeController {
     private String filename = "resume.xlsx";
     private String photoFileName;
     private Sheet currentSheet;
-    private final int newWidth = (int) (35 * 2.83465);
-    private final int newHeight = (int) (45 * 2.83465);
-    private final XSSFWorkbook workbook=new XSSFWorkbook();
-    // private final XSSFCreationHelper helper = workbook.getCreationHelper();
+    private XSSFWorkbook workbook;
+    private int NEW_WIDTH = (int) (35 * 2.83465);
+    private int NEW_HEIGHT = (int) (45 * 2.83465);
 
 
     public ResumeController() {
     }
 
-    public ResumeController(String photoFileName) {
+    public ResumeController(String photoFileName, XSSFWorkbook workbook) {
         this.photoFileName = photoFileName;
+        this.workbook = workbook;
     }
 
     public int getRowIndex() {
@@ -37,7 +37,7 @@ public class ResumeController {
 
     public void setRowIndex(int rowIndex) {
         this.rowIndex = rowIndex;
-    }
+    } //
 
     public String getFilename() {
         return filename;
@@ -59,18 +59,18 @@ public class ResumeController {
         return workbook;
     }
 
-    public void createMemberInformationSheet() {
+    public void createMemberInformationSheet() { //
         this.currentSheet = workbook.createSheet("회원 정보");
     }
 
     public void createSelfIntroductionSheet() {
         this.currentSheet = workbook.createSheet("자기소개서");
-    }
+    } //
 
     public Row createRowInCurrentSheet() {
         return this.currentSheet.createRow(rowIndex++);
     }
-    public void generatePersonalHeader() {
+    public void generatePersonalHeader() { //
         Row headerRow = this.createRowInCurrentSheet();
         headerRow.createCell(0).setCellValue("사진");
         headerRow.createCell(1).setCellValue("이름");
@@ -88,7 +88,7 @@ public class ResumeController {
         headerRow.createCell(3).setCellValue("졸업여부");
     }
 
-    public void generateCareerHeader() {
+    public void generateCareerHeader() { //
         Row headerRow = this.createRowInCurrentSheet();
         headerRow.createCell(0).setCellValue("근무기간");
         headerRow.createCell(1).setCellValue("근무처");
@@ -96,42 +96,46 @@ public class ResumeController {
         headerRow.createCell(3).setCellValue("근속연수");
     }
 
-    public void resizeResumeSheet() {
+    public void resizeResumeSheet() { //
         for (int i=0; i<6; i++) {
             this.currentSheet.autoSizeColumn(i);
         }
     }
 
-    public BufferedImage resizeBufferedImage(BufferedImage originalImage) {
-        Image resizedImage = originalImage.getScaledInstance(this.newWidth, this.newHeight, Image.SCALE_SMOOTH);
-        BufferedImage resizedBufferedImage = new BufferedImage(this.newWidth, this.newHeight, BufferedImage.TYPE_4BYTE_ABGR);
+    private BufferedImage resizeBufferedImage(BufferedImage originalImage) {
+        Image resizedImage = originalImage.getScaledInstance(this.NEW_WIDTH, this.NEW_HEIGHT, Image.SCALE_SMOOTH);
+        BufferedImage resizedBufferedImage = new BufferedImage(this.NEW_WIDTH, this.NEW_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = resizedBufferedImage.createGraphics();
         g2d.drawImage(resizedImage, 0, 0, null);
         g2d.dispose();
-
         return resizedBufferedImage;
     }
 
-    public byte[] convertImageToByteArray(BufferedImage resizedBufferedImage) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(resizedBufferedImage, "png", baos);
-        return baos.toByteArray();
+    private byte[] convertImageToByteArray(BufferedImage resizedBufferedImage) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(resizedBufferedImage, "png", baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            System.out.println("이미지를 바이트 배열로 변환하는 중 오류가 발행했습니다.");
+            e.printStackTrace();
+            return new byte[0];
+        }
     }
 
-    public int addPictureWorkbook(byte[] imageBytes) {
+    private int addPictureWorkbook(byte[] imageBytes) {
         return workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
     }
 
-    public void insertImage(int imageIndex) {
+    private void insertImage(int imageIndex) {
         XSSFDrawing drawing = (XSSFDrawing) this.currentSheet.createDrawingPatriarch();
         XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0, 0, 1, 1, 2);
         drawing.createPicture(anchor, imageIndex);
     }
 
-
-    public void initiateImageInsertion(Row row) throws IOException {
-        row.setHeightInPoints((float) (this.newHeight * 72) /96);
-        int columnWidth = (int) Math.floor(((float) newWidth / (float) 8) * 256);
+    private void initiateImageInsertion(Row row) throws IOException {
+        row.setHeightInPoints((float) (this.NEW_HEIGHT * 72) / 96);
+        int columnWidth = (int) Math.floor(((float) this.NEW_WIDTH / (float) 8) * 256);
         this.currentSheet.setColumnWidth(0, columnWidth);
 
         String defaultImage = this.photoFileName;
@@ -141,7 +145,7 @@ public class ResumeController {
         insertImage(addPictureWorkbook(convertImageToByteArray(resizeBufferedImage(originalImage))));
     }
 
-    public void insertPersonalInformation(PersonalDTO personalDTO) throws IOException {
+    public void insertPersonalInformation(PersonalDTO personalDTO) throws IOException { //
         Row personalInformationRow = this.createRowInCurrentSheet();
         this.initiateImageInsertion(personalInformationRow);
         personalInformationRow.createCell(1).setCellValue(personalDTO.getPersonName());
@@ -151,7 +155,7 @@ public class ResumeController {
         personalInformationRow.createCell(5).setCellValue(personalDTO.getBirthDate());
     }
 
-    public void insertEducationInformation(List<EducationDTO> educationDTOArray) throws IOException {
+    public void insertEducationInformation(List<EducationDTO> educationDTOArray) throws IOException { //
         for (EducationDTO educationDTO : educationDTOArray) {
             Row educationRow = this.createRowInCurrentSheet();
             educationRow.createCell(0).setCellValue(educationDTO.getGraduationDate());
@@ -161,7 +165,7 @@ public class ResumeController {
         }
     }
 
-    public void insertCareerInformation(List<CareerDTO> careerDTOArray) throws IOException {
+    public void insertCareerInformation(List<CareerDTO> careerDTOArray) throws IOException { //
         for (CareerDTO careerDTO : careerDTOArray) {
             Row educationRow = this.createRowInCurrentSheet();
             educationRow.createCell(0).setCellValue(careerDTO.getWorkPeriod());
@@ -177,7 +181,7 @@ public class ResumeController {
         return style;
     }
 
-    public void insertSelfIntroduction(String selfIntroduction) throws IOException {
+    public void insertSelfIntroduction(String selfIntroduction) throws IOException { //
         Row educationRow = this.createRowInCurrentSheet();
         Cell selfIntroductionCell = educationRow.createCell(0);
         selfIntroductionCell.setCellValue(new XSSFRichTextString(selfIntroduction));
@@ -185,7 +189,7 @@ public class ResumeController {
         this.currentSheet.autoSizeColumn(0);
     }
 
-    public boolean generateExcelResume() {
+    public boolean generateExcelResume() { //
         try {
             FileOutputStream outputStream = new FileOutputStream(new File(filename));
             workbook.write(outputStream);
