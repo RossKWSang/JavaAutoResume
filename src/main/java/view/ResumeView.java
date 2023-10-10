@@ -69,7 +69,7 @@ public class ResumeView {
         return personalScanner.getPhotoFileName();
     }
 
-    public void generateExcelResume() throws IOException {
+    public void generateExcelResume() {
         ResumeController resumeController = new ResumeController(this.getPhotoFileName(), this.workbook);
         resumeController.createMemberInformationSheet();
         resumeController.generatePersonalHeader();
