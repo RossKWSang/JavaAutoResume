@@ -1,9 +1,7 @@
 import view.ResumeView;
 
-import java.io.IOException;
-
 public class ResumeMain {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         ResumeView resumeView = new ResumeView();
         resumeView.generateExcelResume();
     }
