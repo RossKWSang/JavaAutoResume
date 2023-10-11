@@ -83,7 +83,7 @@ public class ResumeView {
         resumeController.createSelfIntroductionSheet();
         resumeController.insertSelfIntroduction(this.getSelfIntroduction());
         if (resumeController.generateExcelResume()) {
-            System.out.println("엑셀 파일이 저장되었습니다. >> " + resumeController.getFilename());
+            System.out.println("엑셀 파일이 저장되었습니다. => " + resumeController.getFilename());
         }
     }
 }
